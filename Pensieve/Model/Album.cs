@@ -29,6 +29,15 @@ namespace Pensieve.Model
         [XmlIgnore]
         public bool HasInfo { get; set; }
 
+        [XmlIgnore]
+        public string SearchableText
+        {
+            get
+            {
+                return (Title + ' ' + Description).ToLower();
+            }
+        }
+
         public string GetFirstLineOfDescription()
         {
             return Description.Split('\n')[0];

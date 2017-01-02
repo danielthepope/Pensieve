@@ -104,28 +104,17 @@ namespace Pensieve.Controller
         public List<Album> SearchKeywords(string searchString)
         {
             if (String.IsNullOrWhiteSpace(searchString)) return albums;
-            searchString = searchString.Trim().ToUpper();
+            searchString = searchString.Trim().ToLower();
 
-            List<Album> results = new List<Album>();
             string[] keywords = searchString.Split(' ');
-            bool found = true;
-            foreach (Album vid in albums)
-            {
-                found = true;
+            List<Album> results = albums.Where(a => {
                 foreach (string keyword in keywords)
                 {
-                    if (String.IsNullOrEmpty(keyword)) continue;
-                    if (!vid.Title.ToUpper().Contains(keyword) && !vid.Description.ToUpper().Contains(keyword))
-                    {
-                        found = false;
-                        break;
-                    }
+                    if (!a.SearchableText.Contains(keyword)) return false;
                 }
-                if (found)
-                {
-                    results.Add(vid);
-                }
-            }
+                return true;
+            }).ToList();
+
             return results;
         }
 
