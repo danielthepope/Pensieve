@@ -41,6 +41,7 @@ namespace Pensieve.Controller
         public List<Album> GetAlbumList()
         {
             albums = FindAlbumsInDirectory(AlbumLocation);
+            albums.Sort(delegate(Album a1, Album a2) { return a1.Date.CompareTo(a2.Date); });
             return albums;
         }
 
