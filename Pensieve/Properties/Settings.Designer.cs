@@ -26,5 +26,7 @@ namespace Pensieve.Properties
                 return defaultInstance;
             }
         }
+
+        public string LibraryPath { get; internal set; }
     }
 }
