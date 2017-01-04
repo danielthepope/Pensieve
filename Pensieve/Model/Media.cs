@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+namespace Pensieve.Model
+{
+    [Serializable]
+    abstract class Media
+    {
+        public string Title
+        {
+            get { return _title == null ? "" : _title; }
+            set { _title = value; }
+        }
+        [NonSerialized]
+        private string _title;
+
+        public string FilePath { get; set; }
+
+        public string Description
+        {
+            get { return _description == null ? "" : _description; }
+            set { _description = value; }
+        }
+        [NonSerialized]
+        private string _description;
+
+        public DateTime Date { get; set; }
+
+        [XmlIgnore]
+        public bool HasInfo { get; set; }
+
+        public Media() { }
+
+        public string SearchableText()
+        {
+            return (Title + ' ' + Description).ToLower();
+        }
+
+    }
+}

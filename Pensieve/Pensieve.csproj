@@ -65,6 +65,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controller\AlbumManager.cs" />
+    <Compile Include="Controller\MediaManager.cs" />
+    <Compile Include="Controller\VideoManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -72,6 +74,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Album.cs" />
+    <Compile Include="Model\Media.cs" />
+    <Compile Include="Model\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
