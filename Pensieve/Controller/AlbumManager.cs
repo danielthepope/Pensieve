@@ -45,7 +45,7 @@ namespace Pensieve.Controller
             return albums;
         }
 
-        public List<Album> FindAlbumsInDirectory(string folderPath)
+        private List<Album> FindAlbumsInDirectory(string folderPath)
         {
             var albumList = new List<Album>();
             foreach (string folder in Directory.GetDirectories(folderPath))
@@ -56,14 +56,14 @@ namespace Pensieve.Controller
             return albumList;
         }
 
-        public bool IsAlbum(string folderPath)
+        private bool IsAlbum(string folderPath)
         {
             string folderName = folderPath.Substring(folderPath.LastIndexOf('\\') + 1);
             var match = Regex.Match(folderName, @"^\d\d\d\d_\d\d(?:_\d\d)? - .*$");
             return match.Success;
         }
 
-        public Album GetAlbumInfo(string folderName)
+        private Album GetAlbumInfo(string folderName)
         {
             Album album = new Album(folderName);
             string infoFile = folderName + "\\album.xml";
