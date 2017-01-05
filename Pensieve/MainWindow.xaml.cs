@@ -23,20 +23,20 @@ namespace Pensieve
             string path = Properties.Settings.Default.LibraryPath;
             if (String.IsNullOrEmpty(path)) // First use
             {
-                manager = new AlbumManager();
-                SetLocationProperty(manager.AlbumLocation);
+                manager = new AlbumManager(Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%\\Pictures"));
+                SetLocationProperty(manager.RootPath);
             }
             else
             {
                 manager = new AlbumManager(path);
             }
             InitializeComponent();
-            PathTextBox.Text = manager.AlbumLocation;
+            PathTextBox.Text = manager.RootPath;
         }
 
         private void InfoGrid_Initialized(object sender, EventArgs e)
         {
-            InfoGrid.ItemsSource = manager.GetAlbumList();
+            InfoGrid.ItemsSource = manager.MediaList;
         }
 
         private void EnableDescriptionControls(bool enabled)
@@ -80,7 +80,7 @@ namespace Pensieve
         {
             foreach (Album album in InfoGrid.SelectedItems)
             {
-                Process.Start("explorer.exe", album.FilePath);
+                manager.OpenMedia(album);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Pensieve
             selectedAlbum.Title = TitleBox.Text;
             selectedAlbum.Date = DateTime.Parse(DateBox.Text);
             selectedAlbum.Description = DescriptionBox.Text;
-            bool completed = manager.PersistAlbum(selectedAlbum);
+            bool completed = manager.PersistMedia(selectedAlbum);
             InfoGrid.Items.Refresh();
             if (!completed) MessageBox.Show("Couldn't save changes");
         }
@@ -103,7 +103,7 @@ namespace Pensieve
 
         private void SearchBox_KeyUp(object sender, KeyEventArgs e)
         {
-            InfoGrid.ItemsSource = manager.SearchKeywords(SearchBox.Text);
+            InfoGrid.ItemsSource = manager.FilterMediaList(SearchBox.Text, NoInfoButton.IsChecked.Value);
         }
 
         private void ClearSearchBoxButton_Click(object sender, RoutedEventArgs e)
@@ -128,7 +128,7 @@ namespace Pensieve
 
         private void NoInfoButton_Checked(object sender, RoutedEventArgs e)
         {
-            InfoGrid.ItemsSource = manager.GetAlbumsWithoutInfo(SearchBox.Text);
+            SearchBox_KeyUp(sender, null);
         }
 
         private void NoInfoButton_Unchecked(object sender, RoutedEventArgs e)

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace Pensieve.Model
 {
     [Serializable]
-    abstract class Media
+    public abstract class Media
     {
         public string Title
         {
@@ -18,6 +18,7 @@ namespace Pensieve.Model
         [NonSerialized]
         private string _title;
 
+        [XmlIgnore]
         public string FilePath { get; set; }
 
         public string Description
@@ -37,7 +38,7 @@ namespace Pensieve.Model
 
         public string SearchableText()
         {
-            return (Title + ' ' + Description).ToLower();
+            return (Title + ' ' + Description + ' ' + Date.ToShortDateString()).ToLower();
         }
 
     }

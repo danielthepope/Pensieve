@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace Pensieve.Controller
 {
-    abstract class MediaManager<T> where T : Media
+    public abstract class MediaManager<T> where T : Media
     {
         public string RootPath { get; private set; }
 
