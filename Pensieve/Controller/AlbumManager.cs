@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace Pensieve.Controller
 {
-    public class AlbumManager : MediaManager<Album>
+    public class AlbumManager : AbstractMediaManager<Album>
     {
         public AlbumManager(string location) : base(location) { }
 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Pensieve.Controller
 {
-    class VideoManager : MediaManager<Video>
+    class VideoManager : AbstractMediaManager<Video>
     {
         public VideoManager(string path) : base(path)
         {

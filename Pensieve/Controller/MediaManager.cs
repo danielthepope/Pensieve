@@ -1,51 +1,84 @@
 ﻿using Pensieve.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using System.Collections;
 
 namespace Pensieve.Controller
 {
-    public abstract class MediaManager<T> where T : Media
+    class MediaManager
     {
-        public string RootPath { get; private set; }
+        public AlbumManager Albums { get; private set; }
+        public VideoManager Videos { get; private set; }
 
-        protected XmlSerializer serializer;
-
-        public MediaManager(string path)
+        private string _rootPath;
+        public string RootPath
         {
-            serializer = new XmlSerializer(typeof(T));
-            RootPath = path;
-            if (!Directory.Exists(path))
+            get
             {
-                throw new FileNotFoundException("Invalid directory specified");
+                return _rootPath;
+            }
+            set
+            {
+                _rootPath = value;
+                Albums = new AlbumManager(value);
+                Videos = new VideoManager(value);
+                _mediaList = null;
             }
         }
 
-        public abstract override string ToString();
-
-        /// <summary>
-        /// Get a sorted list of Media objects managed by this Media Manager.
-        /// </summary>
-        public List<T> MediaList
+        public List<Media> MediaList
         {
             get
             {
                 if (_mediaList != null) return _mediaList;
                 else
                 {
-                    _mediaList = FindMediaInDirectory(RootPath);
-                    _mediaList.Sort((a1, a2) => a1.Date.CompareTo(a2.Date));
-                    return _mediaList;
+                    var mediaList = new List<Media>();
+                    mediaList.AddRange(Albums.MediaList);
+                    mediaList.AddRange(Videos.MediaList);
+                    mediaList.Sort((a, b) => a.Date.CompareTo(b.Date));
+                    _mediaList = mediaList;
+                    return mediaList;
                 }
             }
         }
-        private List<T> _mediaList;
+        private List<Media> _mediaList;
 
-        public List<T> FilterMediaList(string searchString, bool onlyNoInfo)
+        public MediaManager(string baseUrl)
+        {
+            RootPath = baseUrl;
+        }
+
+        internal void OpenMedia(Media media)
+        {
+            if (media is Album)
+            {
+                Albums.OpenMedia(media as Album);
+            }
+            else if (media is Video)
+            {
+                Videos.OpenMedia(media as Video);
+            }
+            else throw new NotImplementedException();
+        }
+
+        internal bool PersistMedia(Media media)
+        {
+            if (media is Album)
+            {
+                return Albums.PersistMedia(media as Album);
+            }
+            else if (media is Video)
+            {
+                return Videos.PersistMedia(media as Video);
+            }
+            else throw new NotImplementedException();
+        }
+
+        internal List<Media> FilterMediaList(string searchString, bool onlyNoInfo)
         {
             string[] keywords = searchString.Trim().ToLower().Split(' ');
             return MediaList.Where(m => // TODO maybe add AsParallel().AsOrdered() : https://msdn.microsoft.com/en-us/library/dd997425(v=vs.110).aspx
@@ -57,66 +90,5 @@ namespace Pensieve.Controller
                 return onlyNoInfo ? !m.HasInfo : true;
             }).ToList();
         }
-
-        ///// <summary>
-        ///// Reload all Media objects from the root folder.
-        ///// </summary>
-        ///// <returns></returns>
-        //public List<T> RefreshMediaList()
-        //{
-        //    _mediaList = null;
-        //    return MediaList;
-        //}
-
-        /// <summary>
-        /// Find all media objects in the given directory. Called recursively
-        /// to traverse directories.
-        /// </summary>
-        /// <param name="directory">The directory to search within</param>
-        /// <returns>Unsorted list of Media objects</returns>
-        protected abstract List<T> FindMediaInDirectory(string directory);
-
-        /// <summary>
-        /// For a given media object, get the path for its info file.
-        /// </summary>
-        /// <param name="media"></param>
-        /// <returns></returns>
-        protected string InfoFilePath(T media)
-        {
-            return InfoFilePath(media.FilePath);
-        }
-
-        protected abstract string InfoFilePath(string mediaPath);
-
-        protected abstract T GetMediaInfo(string mediaPath);
-
-        /// <summary>
-        /// Save the media object to disk somewhere. If the file exists, it is
-        /// overwritten.
-        /// </summary>
-        /// <param name="media">Object to save</param>
-        /// <returns>Whether the save was successful</returns>
-        public bool PersistMedia(T media)
-        {
-            using (FileStream writer = File.Open(InfoFilePath(media), FileMode.Create))
-            {
-                try
-                {
-                    serializer.Serialize(writer, media);
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }
-            media.HasInfo = true;
-            return true;
-        }
-
-        /// <summary>
-        /// Opens media for viewing
-        /// </summary>
-        /// <param name="media"></param>
-        public abstract void OpenMedia(T media);
     }
 }

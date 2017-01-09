@@ -15,28 +15,30 @@ namespace Pensieve
     /// </summary>
     public partial class MainWindow : Window
     {
-        AlbumManager manager;
-        Album selectedAlbum = null;
+        MediaManager mediaManager;
+        //AlbumManager albumManager;
+        //VideoManager videoManager;
+        Media selectedItem = null;
 
         public MainWindow()
         {
             string path = Properties.Settings.Default.LibraryPath;
             if (String.IsNullOrEmpty(path)) // First use
             {
-                manager = new AlbumManager(Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%\\Pictures"));
-                SetLocationProperty(manager.RootPath);
+                mediaManager = new MediaManager(Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%\\Pictures"));
+                SetLocationProperty(mediaManager.RootPath);
             }
             else
             {
-                manager = new AlbumManager(path);
+                mediaManager = new MediaManager(path);
             }
             InitializeComponent();
-            PathTextBox.Text = manager.RootPath;
+            PathTextBox.Text = mediaManager.RootPath;
         }
 
         private void InfoGrid_Initialized(object sender, EventArgs e)
         {
-            InfoGrid.ItemsSource = manager.MediaList;
+            InfoGrid.ItemsSource = mediaManager.MediaList;
         }
 
         private void EnableDescriptionControls(bool enabled)
@@ -50,8 +52,8 @@ namespace Pensieve
 
         private void InfoGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (selectedAlbum != null && (!DescriptionBox.Text.Equals(selectedAlbum.Description)
-                 || !DateBox.Text.Equals(selectedAlbum.Date.ToString("dd/MM/yyyy"))))
+            if (selectedItem != null && (!DescriptionBox.Text.Equals(selectedItem.Description)
+                 || !DateBox.Text.Equals(selectedItem.Date.ToString("dd/MM/yyyy"))))
             {
                 SaveButton_Click(sender, null);
             }
@@ -61,15 +63,15 @@ namespace Pensieve
             if (InfoGrid.SelectedItems.Count == 1)
             {
                 EnableDescriptionControls(true);
-                selectedAlbum = (Album)InfoGrid.SelectedItem;
-                TitleBox.Text = selectedAlbum.Title;
-                DateBox.Text = selectedAlbum.Date.ToString("dd/MM/yyyy");
-                DescriptionBox.Text = selectedAlbum.Description;
+                selectedItem = (Media)InfoGrid.SelectedItem;
+                TitleBox.Text = selectedItem.Title;
+                DateBox.Text = selectedItem.Date.ToString("dd/MM/yyyy");
+                DescriptionBox.Text = selectedItem.Description;
             }
             else
             {
                 EnableDescriptionControls(false);
-                selectedAlbum = null;
+                selectedItem = null;
                 TitleBox.Text = "";
                 DateBox.Text = "";
                 DescriptionBox.Text = "";
@@ -78,32 +80,32 @@ namespace Pensieve
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach (Album album in InfoGrid.SelectedItems)
+            foreach (Media media in InfoGrid.SelectedItems)
             {
-                manager.OpenMedia(album);
+                mediaManager.OpenMedia(media);
             }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            selectedAlbum.Title = TitleBox.Text;
-            selectedAlbum.Date = DateTime.Parse(DateBox.Text);
-            selectedAlbum.Description = DescriptionBox.Text;
-            bool completed = manager.PersistMedia(selectedAlbum);
+            selectedItem.Title = TitleBox.Text;
+            selectedItem.Date = DateTime.Parse(DateBox.Text);
+            selectedItem.Description = DescriptionBox.Text;
+            bool completed = mediaManager.PersistMedia(selectedItem);
             InfoGrid.Items.Refresh();
             if (!completed) MessageBox.Show("Couldn't save changes");
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            TitleBox.Text = selectedAlbum.Title;
-            DateBox.Text = selectedAlbum.Date.ToString("dd/MM/yyyy");
-            DescriptionBox.Text = selectedAlbum.Description;
+            TitleBox.Text = selectedItem.Title;
+            DateBox.Text = selectedItem.Date.ToString("dd/MM/yyyy");
+            DescriptionBox.Text = selectedItem.Description;
         }
 
         private void SearchBox_KeyUp(object sender, KeyEventArgs e)
         {
-            InfoGrid.ItemsSource = manager.FilterMediaList(SearchBox.Text, NoInfoButton.IsChecked.Value);
+            InfoGrid.ItemsSource = mediaManager.FilterMediaList(SearchBox.Text, NoInfoButton.IsChecked.Value);
         }
 
         private void ClearSearchBoxButton_Click(object sender, RoutedEventArgs e)
@@ -144,7 +146,7 @@ namespace Pensieve
             {
                 string selectedPath = picker.SelectedPath;
                 if (!selectedPath.EndsWith("\\")) selectedPath += "\\";
-                manager = new AlbumManager(selectedPath);
+                mediaManager.RootPath = selectedPath;
                 SetLocationProperty(selectedPath);
                 InfoGrid_Initialized(sender, null);
                 PathTextBox.Text = selectedPath;

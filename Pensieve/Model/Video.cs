@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pensieve.Model
 {
-    class Video : Media
+    public class Video : Media
     {
         public Video() { }
 
