@@ -76,10 +76,5 @@ namespace Pensieve.Controller
                 return media;
             }
         }
-
-        //private Video GetVideoInfo(string videoFilePath)
-        //{
-        //    string infoFilePath = InfoFilePath(videoFilePath);
-        //}
     }
 }

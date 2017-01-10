@@ -41,5 +41,13 @@ namespace Pensieve.Model
             return (Title + ' ' + Description + ' ' + Date.ToShortDateString()).ToLower();
         }
 
+        public string Icon
+        {
+            get
+            {
+                if (this is Video) return "icons/video.png";
+                else return "icons/album.png";
+            }
+        }
     }
 }

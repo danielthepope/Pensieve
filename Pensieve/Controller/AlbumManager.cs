@@ -70,7 +70,7 @@ namespace Pensieve.Controller
 
         public override void OpenMedia(Album album)
         {
-            Process.Start("explorer.exe", album.FilePath);
+            Process.Start("explorer.exe", '"' + album.FilePath + '"');
         }
     }
 }
