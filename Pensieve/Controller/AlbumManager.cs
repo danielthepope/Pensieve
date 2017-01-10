@@ -23,11 +23,15 @@ namespace Pensieve.Controller
         protected override List<Album> FindMediaInDirectory(string folderPath)
         {
             var albumList = new List<Album>();
-            foreach (string folder in Directory.GetDirectories(folderPath))
+            try
             {
-                if (IsAlbum(folder)) albumList.Add(GetMediaInfo(folder));
-                else albumList.AddRange(FindMediaInDirectory(folder));
+                foreach (string folder in Directory.GetDirectories(folderPath))
+                {
+                    if (IsAlbum(folder)) albumList.Add(GetMediaInfo(folder));
+                    else albumList.AddRange(FindMediaInDirectory(folder));
+                }
             }
+            catch (UnauthorizedAccessException) { }
             return albumList;
         }
 

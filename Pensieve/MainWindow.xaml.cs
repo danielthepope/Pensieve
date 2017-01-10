@@ -16,8 +16,6 @@ namespace Pensieve
     public partial class MainWindow : Window
     {
         MediaManager mediaManager;
-        //AlbumManager albumManager;
-        //VideoManager videoManager;
         Media selectedItem = null;
 
         public MainWindow()
@@ -147,9 +145,9 @@ namespace Pensieve
                 string selectedPath = picker.SelectedPath;
                 if (!selectedPath.EndsWith("\\")) selectedPath += "\\";
                 mediaManager.RootPath = selectedPath;
-                SetLocationProperty(selectedPath);
                 InfoGrid_Initialized(sender, null);
                 PathTextBox.Text = selectedPath;
+                SetLocationProperty(selectedPath);
             }
         }
 

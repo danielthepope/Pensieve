@@ -34,14 +34,18 @@ namespace Pensieve.Controller
         protected override List<Video> FindMediaInDirectory(string directory)
         {
             var videoList = new List<Video>();
-            foreach (string folder in Directory.GetDirectories(directory))
+            try
             {
-                videoList.AddRange(FindMediaInDirectory(folder));
+                foreach (string folder in Directory.GetDirectories(directory))
+                {
+                    videoList.AddRange(FindMediaInDirectory(folder));
+                }
+                foreach (string file in Directory.GetFiles(directory))
+                {
+                    if (IsVideo(file)) videoList.Add(GetMediaInfo(file));
+                }
             }
-            foreach (string file in Directory.GetFiles(directory))
-            {
-                if (IsVideo(file)) videoList.Add(GetMediaInfo(file));
-            }
+            catch (UnauthorizedAccessException) { }
             return videoList;
         }
 
