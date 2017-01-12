@@ -17,6 +17,8 @@ namespace Pensieve
     {
         MediaManager mediaManager;
         Media selectedItem = null;
+        private bool ShowAlbums { get; set; }
+        private bool ShowVideos { get; set; }
 
         public MainWindow()
         {
@@ -103,7 +105,7 @@ namespace Pensieve
 
         private void SearchBox_KeyUp(object sender, KeyEventArgs e)
         {
-            InfoGrid.ItemsSource = mediaManager.FilterMediaList(SearchBox.Text, NoInfoButton.IsChecked.Value);
+            InfoGrid.ItemsSource = mediaManager.FilterMediaList(SearchBox.Text, NoInfoButton.IsChecked.Value, ShowAlbums, ShowVideos);
         }
 
         private void ClearSearchBoxButton_Click(object sender, RoutedEventArgs e)
@@ -160,6 +162,27 @@ namespace Pensieve
         private void InfoGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             OpenButton_Click(sender, null);
+        }
+
+        private void PhotosRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ShowAlbums = true;
+            ShowVideos = false;
+            SearchBox_KeyUp(sender, null);
+        }
+
+        private void VideosRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ShowAlbums = false;
+            ShowVideos = true;
+            SearchBox_KeyUp(sender, null);
+        }
+
+        private void BothButton_Checked(object sender, RoutedEventArgs e)
+        {
+            ShowAlbums = true;
+            ShowVideos = true;
+            SearchBox_KeyUp(sender, null);
         }
     }
 }

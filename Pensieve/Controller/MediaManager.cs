@@ -78,16 +78,20 @@ namespace Pensieve.Controller
             else throw new NotImplementedException();
         }
 
-        internal List<Media> FilterMediaList(string searchString, bool onlyNoInfo)
+        internal List<Media> FilterMediaList(string searchString, bool onlyNoInfo, bool showAlbums, bool showVideos)
         {
             string[] keywords = searchString.Trim().ToLower().Split(' ');
             return MediaList.Where(m => // TODO maybe add AsParallel().AsOrdered() : https://msdn.microsoft.com/en-us/library/dd997425(v=vs.110).aspx
             {
-                foreach (string keyword in keywords)
+                if ((m is Album && showAlbums) || (m is Video && showVideos))
                 {
-                    if (!m.SearchableText().Contains(keyword)) return false;
+                    foreach (string keyword in keywords)
+                    {
+                        if (!m.SearchableText().Contains(keyword)) return false;
+                    }
+                    return onlyNoInfo ? !m.HasInfo : true;
                 }
-                return onlyNoInfo ? !m.HasInfo : true;
+                else return false;
             }).ToList();
         }
     }
