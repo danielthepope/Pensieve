@@ -5,7 +5,7 @@
 
 Pensieve is a Windows desktop application that helps you find collections of photos and videos.
 
-**Pensieve is still in early development but you're welcome to try it out**
+**Pensieve is still in early development. There are no releases yet**
 
 If you're like me, you've got thousands of photos that you've taken over the years, all sorted into folders. My folders are all named with the date in yyyy_MM_dd format, with a short title.
 
