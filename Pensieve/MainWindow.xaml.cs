@@ -147,7 +147,7 @@ namespace Pensieve
                 string selectedPath = picker.SelectedPath;
                 if (!selectedPath.EndsWith("\\")) selectedPath += "\\";
                 mediaManager.RootPath = selectedPath;
-                InfoGrid_Initialized(sender, null);
+                SearchBox_KeyUp(sender, null);
                 PathTextBox.Text = selectedPath;
                 SetLocationProperty(selectedPath);
             }
