@@ -1,23 +1,28 @@
 ﻿<Window x:Class="Pensieve.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Pensieve" Height="390" Width="580" MinHeight="350" MinWidth="580">
+        Title="Pensieve" Height="487.321" Width="618.166" MinHeight="350" MinWidth="580">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65*"/>
+            <RowDefinition Height="56*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="399*"/>
+            <ColumnDefinition Width="410*"/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <TextBox Name="SearchBox" Height="24" Margin="60,46,24.2,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" KeyUp="SearchBox_KeyUp" TabIndex="0" Padding="0,3,0,0" />
         <Label Content="Title" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="5.8,45,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1" Height="26" />
-        <Label Content="Date" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="5.8,74,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1"/>
-        <Label Content="Description" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="3.8,103,0,0" VerticalAlignment="Top" Width="76" Grid.Column="1"/>
-        <TextBox Name="TitleBox" Height="24" Margin="84.8,46,10.2,0" TextWrapping="NoWrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="1" Padding="0,3,0,0"/>
-        <DatePicker Name="DateBox" HorizontalAlignment="Left" Margin="84.8,75,0,0" VerticalAlignment="Top" IsEnabled="False" BorderBrush="#FFABADB3" Grid.Column="1" />
-        <TextBox Name="DescriptionBox" Margin="84.8,104,10.2,70.8" TextWrapping="Wrap" AcceptsReturn="True" AutoWordSelection="True" IsEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" SpellCheck.IsEnabled="True" Padding="0,3,0,0" />
-        <Button Name="CancelButton" Content="Cancel" Margin="0,0,10.2,45.8" VerticalAlignment="Bottom" IsEnabled="False" Click="CancelButton_Click" Grid.Column="1" HorizontalAlignment="Right" Width="75" />
-        <Button Name="SaveButton" Content="Save" Margin="84.8,0,0,45.8" VerticalAlignment="Bottom" IsEnabled="False" Click="SaveButton_Click" Grid.Column="1" HorizontalAlignment="Left" Width="75" />
-        <Button Name="OpenButton" Content="Open" Margin="84.8,0,10.2,9.8" Height="31" VerticalAlignment="Bottom" Click="OpenButton_Click" Grid.Column="1" />
-        <ListView Name="InfoGrid" Margin="10,124,1.2,9.8" Initialized="InfoGrid_Initialized" SelectionChanged="InfoGrid_SelectionChanged" Background="White" BorderBrush="#FFABADB3" Foreground="Black" MouseDoubleClick="InfoGrid_MouseDoubleClick" ItemTemplate="{DynamicResource DataTemplate1}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <Label Content="Date" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="5.8,74,0,0" VerticalAlignment="Top" Width="74" Grid.Column="1" Height="26"/>
+        <Label Content="Description" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Margin="3.8,103,0,0" VerticalAlignment="Top" Width="76" Grid.Column="1" Height="26"/>
+        <TextBox Name="TitleBox" Height="24" Margin="84.8,46,5.6,0" TextWrapping="NoWrap" VerticalAlignment="Top" IsEnabled="False" Grid.Column="1" Padding="0,3,0,0"/>
+        <DatePicker Name="DateBox" HorizontalAlignment="Left" Margin="84.8,75,0,0" VerticalAlignment="Top" IsEnabled="False" BorderBrush="#FFABADB3" Grid.Column="1" Height="24" Width="101" />
+        <TextBox Name="DescriptionBox" Margin="84.8,104,5.6,65.8" TextWrapping="Wrap" AcceptsReturn="True" AutoWordSelection="True" IsEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" SpellCheck.IsEnabled="True" Padding="0,3,0,0" />
+        <Button Name="CancelButton" Content="Cancel" Margin="0,0,6.6,38.8" VerticalAlignment="Bottom" IsEnabled="False" Click="CancelButton_Click" Grid.Column="1" HorizontalAlignment="Right" Width="75" Height="20" />
+        <Button Name="SaveButton" Content="Save" Margin="84.8,0,0,38.8" VerticalAlignment="Bottom" IsEnabled="False" Click="SaveButton_Click" Grid.Column="1" HorizontalAlignment="Left" Width="75" Height="20" />
+        <Button Name="OpenButton" Content="Open" Margin="84.8,0,6.6,2.8" Height="31" VerticalAlignment="Bottom" Click="OpenButton_Click" Grid.Column="1" />
+        <ListView Name="InfoGrid" Margin="10,124,1.2,9.8" Initialized="InfoGrid_Initialized" SelectionChanged="InfoGrid_SelectionChanged" Background="White" BorderBrush="#FFABADB3" Foreground="Black" MouseDoubleClick="InfoGrid_MouseDoubleClick" ItemTemplate="{DynamicResource DataTemplate1}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
             <ListView.Resources>
                 <DataTemplate x:Key="DataTemplate1">
                     <Grid>
@@ -35,13 +40,16 @@
         </ListView>
         <Button Name="ClearSearchBoxButton" Content="×" HorizontalAlignment="Right" Margin="0,46,1.2,0" VerticalAlignment="Top" Width="24" Height="24" Background="White" BorderBrush="#FFABADB3" Click="ClearSearchBoxButton_Click" TabIndex="1" />
         <Button Name="SelectAllButton" Content="Select all" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" Width="75" Click="SelectAllButton_Click" Height="24"/>
-        <CheckBox Name="NoInfoButton" Content="Only items without info" HorizontalAlignment="Left" Margin="98,80,0,0" VerticalAlignment="Top" Width="176" Checked="NoInfoButton_Checked" Unchecked="NoInfoButton_Unchecked"/>
-        <Label Content="Looking at folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
-        <TextBox Name="PathTextBox" Height="20" Margin="115,14,89.2,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Focusable="False" IsTabStop="False" AllowDrop="False" IsEnabled="False" Grid.ColumnSpan="2"/>
-        <Button Name="PathChangeButton" Content="Change" Margin="0,14,10.2,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="PathChangeButton_Click" Grid.Column="1"/>
-        <Label Content="Search" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="PhotosRadioButton" Content="Photos" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Checked="PhotosRadioButton_Checked"/>
-        <RadioButton x:Name="VideosRadioButton" Content="Videos" HorizontalAlignment="Left" Margin="84,104,0,0" VerticalAlignment="Top" Checked="VideosRadioButton_Checked"/>
-        <RadioButton x:Name="BothButton" Content="Both" Margin="159,104,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="44" IsChecked="True" Checked="BothButton_Checked"/>
+        <CheckBox Name="NoInfoButton" Content="Only items without info" HorizontalAlignment="Left" Margin="98,80,0,0" VerticalAlignment="Top" Width="176" Checked="NoInfoButton_Checked" Unchecked="NoInfoButton_Unchecked" Height="15"/>
+        <Label Content="Looking at folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="100" />
+        <TextBox Name="PathTextBox" Height="20" Margin="115,14,84.6,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Focusable="False" IsTabStop="False" AllowDrop="False" IsEnabled="False" Grid.ColumnSpan="2"/>
+        <Button Name="PathChangeButton" Content="Change" Margin="0,14,6.6,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="PathChangeButton_Click" Grid.Column="1" Height="20"/>
+        <Label Content="Search" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
+        <RadioButton x:Name="PhotosRadioButton" Content="Photos" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Checked="PhotosRadioButton_Checked" Height="15" Width="56"/>
+        <RadioButton x:Name="VideosRadioButton" Content="Videos" HorizontalAlignment="Left" Margin="84,104,0,0" VerticalAlignment="Top" Checked="VideosRadioButton_Checked" Height="15" Width="55"/>
+        <RadioButton x:Name="BothButton" Content="Both" Margin="159,104,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="44" IsChecked="True" Checked="BothButton_Checked" Height="15"/>
+        <Rectangle Grid.Column="1" Fill="#CCCCCC" Margin="7.6,0.8,6.6,10" Grid.Row="1" Stroke="#BBBBBB"/>
+        <Label x:Name="label" Content="Preview" Grid.Column="1" Margin="9.6,1.8,7.2,11" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#999999"/>
+        <MediaElement x:Name="PreviewWindow" Grid.Column="1" Margin="8.6,1.8,7.2,11" IsMuted="True" Grid.Row="1" Visibility="Visible"/>
     </Grid>
 </Window>

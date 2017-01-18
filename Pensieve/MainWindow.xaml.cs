@@ -67,6 +67,7 @@ namespace Pensieve
                 TitleBox.Text = selectedItem.Title;
                 DateBox.Text = selectedItem.Date.ToString("dd/MM/yyyy");
                 DescriptionBox.Text = selectedItem.Description;
+                PreviewMedia(InfoGrid.SelectedItem as Media);
             }
             else
             {
@@ -75,6 +76,7 @@ namespace Pensieve
                 TitleBox.Text = "";
                 DateBox.Text = "";
                 DescriptionBox.Text = "";
+                PreviewMedia(null);
             }
         }
 
@@ -183,6 +185,25 @@ namespace Pensieve
             ShowAlbums = true;
             ShowVideos = true;
             SearchBox_KeyUp(sender, null);
+        }
+
+        private void PreviewMedia(Media m)
+        {
+            if (m == null)
+            {
+                PreviewWindow.Source = null;
+                return;
+            }
+            if (m is Video)
+            {
+                PreviewWindow.Source = new Uri(m.FilePath);
+            }
+            else
+            {
+                string[] photos = Directory.GetFiles(m.FilePath, "*.jpg", SearchOption.AllDirectories);
+                if (photos.Length > 0) PreviewWindow.Source = new Uri(photos[0]);
+                else PreviewWindow.Source = null;
+            }
         }
     }
 }
