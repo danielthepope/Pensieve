@@ -125,11 +125,6 @@ namespace Pensieve
             }
         }
 
-        private void SelectAllButton_Click(object sender, RoutedEventArgs e)
-        {
-            InfoGrid.SelectAll();
-        }
-
         private void NoInfoButton_Checked(object sender, RoutedEventArgs e)
         {
             SearchBox_KeyUp(sender, null);

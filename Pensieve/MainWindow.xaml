@@ -22,7 +22,7 @@
         <Button Name="CancelButton" Content="Cancel" Margin="0,0,10.2,38.8" VerticalAlignment="Bottom" IsEnabled="False" Click="CancelButton_Click" Grid.Column="1" HorizontalAlignment="Right" Width="75" Height="20" />
         <Button Name="SaveButton" Content="Save" Margin="84.4,0,0,38.8" VerticalAlignment="Bottom" IsEnabled="False" Click="SaveButton_Click" Grid.Column="1" HorizontalAlignment="Left" Width="75" Height="20" />
         <Button Name="OpenButton" Content="Open" Margin="84.4,0,10.2,2.5" Height="31" VerticalAlignment="Bottom" Click="OpenButton_Click" Grid.Column="1" />
-        <ListView Name="InfoGrid" Margin="10,118,2.6,9.8" Initialized="InfoGrid_Initialized" SelectionChanged="InfoGrid_SelectionChanged" Background="White" BorderBrush="#FFABADB3" Foreground="Black" MouseDoubleClick="InfoGrid_MouseDoubleClick" ItemTemplate="{DynamicResource DataTemplate1}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
+        <ListView Name="InfoGrid" Margin="10,118,2.6,9.8" Initialized="InfoGrid_Initialized" SelectionChanged="InfoGrid_SelectionChanged" Background="White" BorderBrush="#FFABADB3" Foreground="Black" MouseDoubleClick="InfoGrid_MouseDoubleClick" ItemTemplate="{DynamicResource DataTemplate1}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2" SelectionMode="Single">
             <ListView.Resources>
                 <DataTemplate x:Key="DataTemplate1">
                     <Grid>
@@ -39,8 +39,7 @@
             </ListView.Resources>
         </ListView>
         <Button Name="ClearSearchBoxButton" Content="×" HorizontalAlignment="Right" Margin="0,39,2.6,0" VerticalAlignment="Top" Width="24" Height="24" Background="White" BorderBrush="#FFABADB3" Click="ClearSearchBoxButton_Click" TabIndex="1" />
-        <Button Name="SelectAllButton" Content="Select all" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top" Width="75" Click="SelectAllButton_Click" Height="24"/>
-        <CheckBox Name="NoInfoButton" Content="Only items without info" HorizontalAlignment="Left" Margin="98,73,0,0" VerticalAlignment="Top" Width="176" Checked="NoInfoButton_Checked" Unchecked="NoInfoButton_Unchecked" Height="15"/>
+        <CheckBox Name="NoInfoButton" Content="Only items without info" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="176" Checked="NoInfoButton_Checked" Unchecked="NoInfoButton_Unchecked" Height="15"/>
         <Label Content="Looking at folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="100" />
         <TextBox Name="PathTextBox" Height="20" Margin="115,14,90.2,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Focusable="False" IsTabStop="False" AllowDrop="False" IsEnabled="False" Grid.ColumnSpan="2"/>
         <Button Name="PathChangeButton" Content="Change" Margin="0,14,10.2,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="PathChangeButton_Click" Grid.Column="1" Height="20"/>
