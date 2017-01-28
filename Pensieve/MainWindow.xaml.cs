@@ -108,6 +108,15 @@ namespace Pensieve
         private void SearchBox_KeyUp(object sender, KeyEventArgs e)
         {
             InfoGrid.ItemsSource = mediaManager.FilterMediaList(SearchBox.Text, NoInfoButton.IsChecked.Value, ShowAlbums, ShowVideos);
+            if (e != null && e.Key == Key.Enter)
+            {
+                if (InfoGrid.SelectedItem == null || InfoGrid.SelectedIndex == InfoGrid.Items.Count - 1)
+                {
+                    InfoGrid.SelectedIndex = 0;
+                }
+                else ++InfoGrid.SelectedIndex;
+            }
+
         }
 
         private void ClearSearchBoxButton_Click(object sender, RoutedEventArgs e)
