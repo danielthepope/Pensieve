@@ -39,5 +39,21 @@ namespace Pensieve.Model
                 }
             }
         }
+
+        [XmlIgnore]
+        public string[] Photos
+        {
+            get
+            {
+                if (_photos != null) return _photos;
+                else
+                {
+                    _photos = Directory.GetFiles(FilePath, "*.jpg", SearchOption.AllDirectories);
+                    return _photos;
+                }
+            }
+        }
+        [NonSerialized]
+        private string[] _photos;
     }
 }

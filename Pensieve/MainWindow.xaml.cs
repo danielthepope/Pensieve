@@ -198,11 +198,30 @@ namespace Pensieve
             {
                 PreviewWindow.Source = new Uri(m.FilePath);
             }
-            else
+            else if (m is Album)
             {
-                string[] photos = Directory.GetFiles(m.FilePath, "*.jpg", SearchOption.AllDirectories);
-                if (photos.Length > 0) PreviewWindow.Source = new Uri(photos[0]);
+                string[] photos = (m as Album).Photos;
+                if (photos.Length > 0)
+                {
+                    PreviewWindow.Source = new Uri(PickRandom(photos));
+                }
                 else PreviewWindow.Source = null;
+            }
+        }
+
+        private string PickRandom(string[] photos)
+        {
+            return photos[new Random().Next(photos.Length)];
+        }
+
+        private void PreviewWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (InfoGrid.SelectedItem != null)
+            {
+                if (InfoGrid.SelectedItem is Album)
+                {
+                    PreviewMedia(InfoGrid.SelectedItem as Media);
+                }
             }
         }
     }
