@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pensieve", "Pensieve\Pensieve.csproj", "{D286E34D-A6E8-4409-B346-255B4D3FA97A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PensieveTest", "PensieveTest\PensieveTest.csproj", "{DC1D7B78-1F3E-428B-A4B8-BF92ADC8A6DD}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{CBFE3D80-7249-45D4-A550-8B4E0DA58189}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,8 @@ Global
 		{DC1D7B78-1F3E-428B-A4B8-BF92ADC8A6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC1D7B78-1F3E-428B-A4B8-BF92ADC8A6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC1D7B78-1F3E-428B-A4B8-BF92ADC8A6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBFE3D80-7249-45D4-A550-8B4E0DA58189}.Debug|Any CPU.ActiveCfg = Debug
+		{CBFE3D80-7249-45D4-A550-8B4E0DA58189}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
